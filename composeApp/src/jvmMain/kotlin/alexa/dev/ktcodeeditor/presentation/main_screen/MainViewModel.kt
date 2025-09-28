@@ -1,3 +1,6 @@
+import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIAction
+import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIState
+import alexa.dev.ktcodeeditor.utils.execute
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -7,11 +10,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
-import alexa.dev.ktcodeeditor.utils.execute
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -22,6 +22,27 @@ class MainViewModel : ViewModel() {
     //state flow variables(mutable and immutable)
     private val _uiState = MutableStateFlow(MainUIState())
     val uiState = _uiState.asStateFlow()
+
+    private val _uiAction = MutableSharedFlow<MainUIAction>()
+    val uiAction = _uiAction.asSharedFlow()
+
+    fun onAction(action: MainUIAction) {
+        when (action) {
+            MainUIAction.OnCloseTerminalClicked -> {
+                closeTerminal()
+            }
+
+            MainUIAction.OnRunScriptClicked -> {
+                showProgress()
+                executeScript()
+            }
+
+            is MainUIAction.OnTextUpdated -> {
+                updateText(action.newText)
+                updateHighlightedText(highlightKotlinSyntax(action.newText))
+            }
+        }
+    }
 
     //change state to show progress circle
     fun showProgress() {

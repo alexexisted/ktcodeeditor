@@ -23,11 +23,11 @@ fun EditorPaneComposable(
     highlightedText: AnnotatedString,
     enteredText: String,
     onTextChanged: (newText: String) -> Unit,
-    highlightText: (newText: String) -> Unit,
-    scrollState: ScrollState
+    scrollState: ScrollState,
+    modifier: Modifier
 ) {
     Box(
-        Modifier
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
             .padding(5.dp)
@@ -39,7 +39,7 @@ fun EditorPaneComposable(
             fontWeight = FontWeight.Light,
             fontFamily = FontFamily.Monospace,
             color = Color.Black,
-            letterSpacing = 1.sp,
+            letterSpacing = 2.sp,
             modifier = Modifier.fillMaxWidth()
         )
         //get user's input but make it transparent
@@ -47,13 +47,12 @@ fun EditorPaneComposable(
             value = enteredText,
             onValueChange = { newText ->
                 onTextChanged(newText)
-                highlightText(newText)
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 color = Color.Transparent,
                 fontFamily = FontFamily.Monospace,
-                letterSpacing = 1.sp,
+                letterSpacing = 2.sp,
             ),
             modifier = Modifier
                 .fillMaxWidth()

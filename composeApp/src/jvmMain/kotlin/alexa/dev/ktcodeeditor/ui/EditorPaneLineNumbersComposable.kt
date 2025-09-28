@@ -22,8 +22,8 @@ fun EditorPaneLineNumbersComposable(
 
     Box(
         modifier = Modifier
-            .width(30.dp)
-            .padding(top = 4.dp)
+            .width(50.dp)
+            .padding(top = 5.dp)
             .verticalScroll(scrollState)
     ) {
         Column {
@@ -34,7 +34,7 @@ fun EditorPaneLineNumbersComposable(
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light,
                     fontFamily = FontFamily.Monospace,
-                    letterSpacing = 1.sp,
+                    letterSpacing = 2.sp,
                 )
             }
         }

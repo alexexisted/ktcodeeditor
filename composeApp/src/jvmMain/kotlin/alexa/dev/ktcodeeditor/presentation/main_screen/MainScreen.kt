@@ -1,9 +1,5 @@
-import alexa.dev.ktcodeeditor.ui.EditorPaneComposable
-import alexa.dev.ktcodeeditor.ui.EditorPaneLineNumbersComposable
-import alexa.dev.ktcodeeditor.ui.ProgressComposable
-import alexa.dev.ktcodeeditor.ui.RunButtonComposable
-import alexa.dev.ktcodeeditor.ui.TerminalButtonComposable
-import alexa.dev.ktcodeeditor.ui.TerminalComposable
+import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIAction
+import alexa.dev.ktcodeeditor.ui.*
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -26,63 +22,31 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
 
     Column(
         modifier = Modifier
-            .height(920.dp)
-            .width(1080.dp)
             .padding(16.dp)
     ) {
         Text("Code Editor", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .border(1.dp, Color.Gray)
-                .padding(8.dp)
-                .weight(1f)
-        ) {
-            //box with line's numbers
-            EditorPaneLineNumbersComposable(
-                scrollState = scrollState,
-                enteredTextSize = uiState.enteredText.lines().size
-            )
-            //box with editor pane
-            EditorPaneComposable(
-                highlightedText = uiState.highlightedText,
-                enteredText = uiState.enteredText,
-                onTextChanged = { newText -> viewModel.updateText(newText) },
-                highlightText = { newText -> viewModel.updateHighlightedText(viewModel.highlightKotlinSyntax(newText)) },
-                scrollState = scrollState
-            )
-        }
+        // contains two parts inside, column with lines numbers and text input
+        MainEditorPaneComposable(
+            scrollState = scrollState,
+            enteredTextSize = uiState.enteredText.lines().size,
+            highlightedText = uiState.highlightedText,
+            enteredText = uiState.enteredText,
+            onTextChanged = { newText -> viewModel.onAction(MainUIAction.OnTextUpdated(newText)) },
+            modifier = Modifier.weight(1f)
+        )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         //row with buttons and progress circle
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            //run script button
-            RunButtonComposable(
-                isRunning = uiState.isRunning,
-                onRunClicked = {
-                    viewModel.showProgress()
-                    viewModel.executeScript()
-                }
-            )
-            //progress circle
-            if (uiState.isRunning) {
-                Spacer(modifier = Modifier.width(8.dp))
-                ProgressComposable()
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            //close ternminal button
-            if (uiState.showTerminal) {
-                TerminalButtonComposable(
-                    onCloseTerminalClicked = { viewModel.closeTerminal() }
-                )
-            }
-        }
+        PanelWithButtonsComposable(
+            isRunning = uiState.isRunning,
+            showTerminal = uiState.showTerminal,
+            onRunCodeClicked = {viewModel.onAction(MainUIAction.OnRunScriptClicked)},
+            onCloseTerminalClicked = {viewModel.onAction(MainUIAction.OnCloseTerminalClicked)}
+        )
 
         //terminal output part
         if (uiState.showTerminal) {

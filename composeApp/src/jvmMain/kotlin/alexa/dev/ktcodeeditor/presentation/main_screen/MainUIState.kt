@@ -1,3 +1,5 @@
+package alexa.dev.ktcodeeditor.presentation.main_screen
+
 import androidx.compose.ui.text.AnnotatedString
 
 data class MainUIState (
