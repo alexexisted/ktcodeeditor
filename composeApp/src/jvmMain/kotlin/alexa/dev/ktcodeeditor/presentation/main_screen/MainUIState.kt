@@ -5,7 +5,7 @@ import androidx.compose.ui.text.AnnotatedString
 data class MainUIState (
     var enteredText: String = "",
     val outputText: String = "",
-    val isRunning: Boolean = false,
+//    val isRunning: Boolean = false,
     val showTerminal: Boolean = false,
     val kotlinKeywords: Set<String> = setOf(
         "val", "var", "fun", "if", "else", "for", "while", "when",
@@ -14,3 +14,4 @@ data class MainUIState (
         "List", "Thread", "System", "println"),
     val highlightedText: AnnotatedString = AnnotatedString("")
 )
+

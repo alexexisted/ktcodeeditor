@@ -18,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
+    val globalUIState by viewModel.globalUIState.collectAsState()
     val scrollState = rememberScrollState() //shared scroll state for line's numbers and code-editor itself
 
     Column(
@@ -42,7 +43,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
 
         //row with buttons and progress circle
         PanelWithButtonsComposable(
-            isRunning = uiState.isRunning,
+            isRunning = globalUIState.isRunning,
             showTerminal = uiState.showTerminal,
             onRunCodeClicked = {viewModel.onAction(MainUIAction.OnRunScriptClicked)},
             onCloseTerminalClicked = {viewModel.onAction(MainUIAction.OnCloseTerminalClicked)}
@@ -51,7 +52,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
         //terminal output part
         if (uiState.showTerminal) {
             TerminalComposable(
-                outputText = uiState.outputText
+                outputText = globalUIState.outputText
             )
         }
     }
