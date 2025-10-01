@@ -20,7 +20,7 @@ brew install kotlin
 
 **Clone git repo:**
 ~~~bash
-git clone git@github.com:alexexisted/KtCodeEditor.git
+git clone git@github.com:alexexisted/ktcodeeditor.git
 ~~~
 
 **Navigate to the Project Directory:**
