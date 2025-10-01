@@ -1,28 +1,41 @@
-This is a Kotlin Multiplatform project targeting Desktop (JVM).
+# Editor of Kotlin scripts
+- Basic script editing with syntax highlighting for Kotlin keywords.
+- Executes Kotlin scripts using kotlinc -script.
+- Displays real-time output while the script is running.
+- Shows execution errors and exit codes.
+- Provides an indicator for script execution status.
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+## Prerequisites
 
-### Build and Run Desktop (JVM) Application
+**Java Development Kit (JDK) 21+**
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
+**Kotlin Compiler (kotlinc)**
 
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+install it via:
+~~~bash
+brew install kotlin
+~~~
 
----
+### Steps
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+**Clone git repo:**
+~~~bash
+git clone git@github.com:alexexisted/KtCodeEditor.git
+~~~
+
+**Navigate to the Project Directory:**
+~~~bash
+cd KtCodeEditor
+~~~
+
+**run it**
+~~~bash
+./gradlew run
+~~~
+
+**or**
+
+Open the project in IntelliJ IDEA or any preferred Kotlin IDE.
+Build and run the project.
+
+### Video:

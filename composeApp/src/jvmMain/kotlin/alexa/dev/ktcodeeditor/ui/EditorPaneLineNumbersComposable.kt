@@ -13,7 +13,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+/**
+ *  @property enteredTextSize length of text to calculate column's numbers
+ *  @property scrollState syncronised scroll state
+ */
 @Composable
 fun EditorPaneLineNumbersComposable(
     scrollState: ScrollState,

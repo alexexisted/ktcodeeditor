@@ -17,7 +17,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+/**
+ *  @property highlightedText takes text from state to show keywords
+ *  @property enteredText takes text but show it as a transparent
+ *  @property onTextChanged callback called when text is changed
+ *  @property scrollState syncronised scroll state
+ *  @property modifier Modifier
+ */
 @Composable
 fun EditorPaneComposable(
     highlightedText: AnnotatedString,

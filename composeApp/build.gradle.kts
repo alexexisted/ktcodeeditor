@@ -35,11 +35,17 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "alexa.dev.ktcodeeditor.MainKt"
-
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "alexa.dev.ktcodeeditor"
             packageVersion = "1.0.0"
         }
+        jvmArgs += listOf(
+            "--enable-native-access=ALL-UNNAMED",
+            "--add-opens", "java.base/sun.misc=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+            "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED",
+            "--add-opens", "java.base/java.util=ALL-UNNAMED"
+        )
     }
 }

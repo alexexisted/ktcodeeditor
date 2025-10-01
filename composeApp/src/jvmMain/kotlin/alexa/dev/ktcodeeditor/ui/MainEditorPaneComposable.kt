@@ -10,7 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-
+/**
+ *  @property highlightedText text with highlighted keywords
+ *  @property enteredTextSize text size for column calculation
+ *  @property enteredText takes text but show it as a transparent
+ *  @property onTextChanged callback called when text is changed
+ *  @property scrollState syncronised scroll state
+ *  @property modifier Modifier
+ */
 @Composable
 fun MainEditorPaneComposable(
     scrollState: ScrollState,

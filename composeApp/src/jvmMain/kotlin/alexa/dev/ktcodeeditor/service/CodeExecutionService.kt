@@ -1,14 +1,16 @@
 package alexa.dev.ktcodeeditor.service
 
-import alexa.dev.ktcodeeditor.data.GlobalUIStateRepository
+import alexa.dev.ktcodeeditor.data.ExecutionStateRepository
 import kotlinx.coroutines.*
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
-
+/**
+ *  @property executionStateRepository repository that contains state object of code execution
+ */
 class CodeExecutionService(
-    val globalUIStateRepository: GlobalUIStateRepository
+    val executionStateRepository: ExecutionStateRepository
 ) {
     private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -19,25 +21,25 @@ class CodeExecutionService(
                     runKotlinScript(
                         script = script,
                         onOutput = { line ->
-                            globalUIStateRepository.update {
+                            executionStateRepository.update {
                                 it.copy(outputText = it.outputText + line + "\n")
                             } //update output with executed part
                         },
                         onExitCode = { exitCode ->
-                            globalUIStateRepository.update {
+                            executionStateRepository.update {
                                 it.copy(
-//                                    isRunning = false,
+                                    isRunning = false,
                                     outputText = it.outputText + "\nExit Code: $exitCode",
-                                    exitCode = "\nExit Code: $exitCode"
+                                    exitCode = "$exitCode"
                                 ) //add exit code to result of the script
                             }
                         }
                     )
                 }
             } catch (e: Exception) { //if error then show exception
-                globalUIStateRepository.update { it.copy(isRunning = false, outputText = e.message ?: "Unknown error") }
+                executionStateRepository.update { it.copy(isRunning = false, outputText = e.message ?: "Unknown error") }
             } finally { //anyway finish the execution
-                globalUIStateRepository.update { it.copy(isRunning = false) }
+                executionStateRepository.update { it.copy(isRunning = false) }
             }
         }
     }

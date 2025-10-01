@@ -1,32 +1,38 @@
-import alexa.dev.ktcodeeditor.data.ExecutionGlobalUIState
-import alexa.dev.ktcodeeditor.data.GlobalUIStateRepository
+import alexa.dev.ktcodeeditor.data.ExecutionStateRepository
+import alexa.dev.ktcodeeditor.data.ExecutionUIState
+import alexa.dev.ktcodeeditor.data.HighlightUIState
+import alexa.dev.ktcodeeditor.data.SyntaxHighlightStateRepository
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIAction
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIState
 import alexa.dev.ktcodeeditor.service.CodeExecutionService
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
+import alexa.dev.ktcodeeditor.service.SyntaxHighlightService
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
-//main place for the logic
+/**
+ * @property executionStateRepository repository to use state with code execution data
+ * @property syntaxHighlightStateRepository repository to use state with highlighted words
+ * @property codeExecutionService service with logic of code execution
+ * @property syntaxHighlightService service with logic of syntax highlighting
+ */
 class MainViewModel(
-    private val globalUIStateRepository: GlobalUIStateRepository,
-    private val codeExecutionService: CodeExecutionService
+    private val executionStateRepository: ExecutionStateRepository,
+    private val syntaxHighlightStateRepository: SyntaxHighlightStateRepository,
+    private val codeExecutionService: CodeExecutionService,
+    private val syntaxHighlightService: SyntaxHighlightService
 ) : ViewModel() {
     //state flow
     private val _uiState = MutableStateFlow(MainUIState())
     val uiState = _uiState.asStateFlow()
 
     //global state flow used in service and vm
-    val globalUIState: StateFlow<ExecutionGlobalUIState> = globalUIStateRepository.globalUiState
+    val executionUIState: StateFlow<ExecutionUIState> = executionStateRepository.executionUiState
+    val syntaxUiState: StateFlow<HighlightUIState> = syntaxHighlightStateRepository.highlightUiState
 
     private val _uiAction = MutableSharedFlow<MainUIAction>()
     val uiAction = _uiAction.asSharedFlow()
 
+    //method to operate action calls from ui
     fun onAction(action: MainUIAction) {
         when (action) {
             MainUIAction.OnCloseTerminalClicked -> {
@@ -40,14 +46,14 @@ class MainViewModel(
 
             is MainUIAction.OnTextUpdated -> {
                 updateText(action.newText)
-                updateHighlightedText(highlightKotlinSyntax(action.newText))
+                highlightWords(action.newText)
             }
         }
     }
 
     //change state to show progress circle
     fun showProgress() {
-        globalUIStateRepository.update {
+        executionStateRepository.update {
             it.copy(
                 isRunning = true
             )
@@ -58,15 +64,17 @@ class MainViewModel(
     fun executeScript() {
         _uiState.update { //update state
             it.copy(
-                outputText = "",
                 showTerminal = true,
             )
         }
-        globalUIStateRepository.update {
+        //update state of execution repo
+        executionStateRepository.update {
             it.copy(
-                isRunning = true
+                isRunning = true,
+                outputText = ""
             )
         }
+        //call execution method from service
         codeExecutionService.executeScript(uiState.value.enteredText)
     }
 
@@ -88,35 +96,11 @@ class MainViewModel(
         }
     }
 
-    //highlight words
-    fun highlightKotlinSyntax(text: String): AnnotatedString {
-        val regex = "\\b(${_uiState.value.kotlinKeywords.joinToString("|")})\\b".toRegex()
-        return buildAnnotatedString {
-            var lastIndex = 0 //track end of last match
-            regex.findAll(text).forEach { matchResult -> //find all keywords in text on a pane
-                //first and last indexes of matched word
-                val start = matchResult.range.first
-                val end = matchResult.range.last + 1
-
-                append(text.substring(lastIndex, start)) //firstly append not matched text
-
-                withStyle(style = SpanStyle(color = Color.Blue, fontWeight = FontWeight.Bold)) {
-                    append(text.substring(start, end)) //style actual matched word
-                }
-
-                lastIndex = end //set last index to the end of last matched word
-            }
-            append(text.substring(lastIndex))
-        }
-    }
-
-    //highlighted text in state
-    fun updateHighlightedText(text: AnnotatedString) {
-        _uiState.update {
-            it.copy(
-                highlightedText = text
-            )
-        }
+    //call service to find keywords and highlight them
+    private fun highlightWords(text: String) {
+        syntaxHighlightService.updateHighlightedText(
+            syntaxHighlightService.highlightKotlinSyntax(text)
+        )
     }
 }
 

@@ -8,6 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ *  @property onCloseTerminalClicked callback when we close terminal
+ */
 @Composable
 fun TerminalButtonComposable(
     onCloseTerminalClicked: () -> Unit,
