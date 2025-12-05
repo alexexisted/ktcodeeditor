@@ -1,4 +1,5 @@
 # Editor of Kotlin scripts
+- Helps you to add kotlinc path
 - Basic script editing with syntax highlighting for Kotlin keywords.
 - Executes Kotlin scripts using kotlinc -script.
 - Displays real-time output while the script is running.
@@ -38,7 +39,14 @@ cd KtCodeEditor
 Open the project in IntelliJ IDEA or any preferred Kotlin IDE.
 Build and run the project.
 
-### Video:
+### Video of setup feature:
 
-https://github.com/user-attachments/assets/832622c8-ee84-47b9-8059-3938bdaa55f1
+https://github.com/user-attachments/assets/23b6181c-cdf7-4653-b8b7-d684dd93eaf1
+
+
+### Video of editor feature:
+
+https://github.com/user-attachments/assets/a1858019-604d-4ce6-abac-cd9e295b0b47
+
+
 
