@@ -27,11 +27,6 @@ class MainViewModel(
     private val _uiAction = MutableSharedFlow<MainUIAction>()
     val uiAction = _uiAction.asSharedFlow()
 
-    init {
-        //close settings when enter the main screen
-        closeSetting()
-    }
-
     //method to operate action calls from ui
     fun onAction(action: MainUIAction) {
         when (action) {
@@ -73,9 +68,9 @@ class MainViewModel(
     }
 
     private fun openSettings() {
-        _uiState.update {
+        executionStateRepository.update {
             it.copy(
-                openSettings = true
+                isSettingsOpen = true
             )
         }
     }

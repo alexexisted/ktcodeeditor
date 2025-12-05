@@ -31,11 +31,12 @@ fun MainScreen(onSettingsClicked: () -> Unit = {}, viewModel: MainViewModel = vi
     val syntaxUIState by viewModel.syntaxUiState.collectAsState()
     val scrollState = rememberScrollState() //shared scroll state for line's numbers and code-editor itself
 
-    LaunchedEffect(uiState.openSettings) {
-        if (uiState.openSettings) {
+    LaunchedEffect(executionUIState.isSettingsOpen) {
+        if (executionUIState.isSettingsOpen) {
             onSettingsClicked()
         }
     }
+
     Column(
         modifier = Modifier
             .padding(16.dp)

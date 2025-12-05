@@ -1,5 +1,6 @@
 package alexa.dev.ktcodeeditor.presentation.kotlinc_path_screen
 
+import alexa.dev.ktcodeeditor.domain.ExecutionStateRepository
 import alexa.dev.ktcodeeditor.domain.KotlincPathFinderService
 import alexa.dev.ktcodeeditor.domain.KotlincPathRepository
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,8 @@ import kotlinx.coroutines.flow.update
 
 class KotlincPathViewModel(
     private val kotlincPathFinderService: KotlincPathFinderService,
-    private val kotlincPathRepository: KotlincPathRepository
+    private val kotlincPathRepository: KotlincPathRepository,
+    private val executionStateRepository: ExecutionStateRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(KotlincState())
@@ -94,5 +96,10 @@ class KotlincPathViewModel(
     //saves path in storage
     private fun savePath() {
         kotlincPathRepository.savePath(uiState.value.path)
+        executionStateRepository.update {
+            it.copy(
+                isSettingsOpen = false
+            )
+        }
     }
 }

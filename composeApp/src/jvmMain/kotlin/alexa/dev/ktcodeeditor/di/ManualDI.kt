@@ -67,7 +67,8 @@ object ManualDI {
     fun createKotlincPathViewModel(): KotlincPathViewModel {
         return KotlincPathViewModel(
             kotlincPathFinderService = kotlincPathFinderService,
-            kotlincPathRepository = kotlincPathRepository
+            kotlincPathRepository = kotlincPathRepository,
+            executionStateRepository = executionStateRepository
         )
     }
 }

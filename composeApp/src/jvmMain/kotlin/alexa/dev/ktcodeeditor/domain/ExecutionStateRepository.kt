@@ -26,5 +26,6 @@ data class ExecutionUIState(
     val outputText: String = "",
     val exitCode: String = "none",
     val isRunning: Boolean = false,
-    val kotlincPath: String = ""
+    val kotlincPath: String = "",
+    val isSettingsOpen: Boolean = true
 )
