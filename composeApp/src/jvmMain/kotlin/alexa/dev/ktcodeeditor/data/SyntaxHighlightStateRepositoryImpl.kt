@@ -1,15 +1,16 @@
-package alexa.dev.ktcodeeditor.domain
+package alexa.dev.ktcodeeditor.data
 
-import alexa.dev.ktcodeeditor.data.HighlightUIState
-import alexa.dev.ktcodeeditor.data.SyntaxHighlightStateRepository
+import alexa.dev.ktcodeeditor.domain.HighlightUIState
+import alexa.dev.ktcodeeditor.domain.SyntaxHighlightStateRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+
 /**
  * SyntaxHighlightStateRepository implementation
  */
-class SyntaxHighlightStateRepositoryImpl: SyntaxHighlightStateRepository {
+class SyntaxHighlightStateRepositoryImpl : SyntaxHighlightStateRepository {
     private val _highlightUiState = MutableStateFlow(HighlightUIState())
     override val highlightUiState: StateFlow<HighlightUIState> = _highlightUiState.asStateFlow()
 

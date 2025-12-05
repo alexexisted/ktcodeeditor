@@ -1,4 +1,4 @@
-package alexa.dev.ktcodeeditor.ui
+package alexa.dev.ktcodeeditor.ui.main_screen_components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator

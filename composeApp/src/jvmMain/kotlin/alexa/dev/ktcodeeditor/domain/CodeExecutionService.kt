@@ -1,16 +1,21 @@
-package alexa.dev.ktcodeeditor.service
+package alexa.dev.ktcodeeditor.domain
 
-import alexa.dev.ktcodeeditor.data.ExecutionStateRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
 import java.io.InputStreamReader
+
 /**
  *  @property executionStateRepository repository that contains state object of code execution
  */
 class CodeExecutionService(
-    val executionStateRepository: ExecutionStateRepository
+    val executionStateRepository: ExecutionStateRepository,
+    private val kotlincPathRepository: KotlincPathRepository
 ) {
     private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
@@ -82,16 +87,6 @@ class CodeExecutionService(
     }
 
     private fun getKotlinCompilerPath(): String {
-        //check the most possible paths
-        val pathsToCheck = listOf(
-            "/opt/homebrew/bin/kotlinc",
-            "/usr/local/bin/kotlinc",
-            "/usr/bin/kotlinc",
-            System.getenv("KOTLIN_HOME")?.let { "$it/bin/kotlinc" } ?: ""
-            //getting env path where kotlin is installed and if not null add it to compiler path
-        )
-
-        return pathsToCheck.firstOrNull { File(it).exists() } //if kotlinc in path true
-            ?: throw IllegalStateException("Kotlin compiler not found. Please install it.")
+        return kotlincPathRepository.getPath() ?: ""
     }
 }

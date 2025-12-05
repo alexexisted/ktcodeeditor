@@ -1,7 +1,7 @@
-package alexa.dev.ktcodeeditor.domain
+package alexa.dev.ktcodeeditor.data
 
-import alexa.dev.ktcodeeditor.data.ExecutionUIState
-import alexa.dev.ktcodeeditor.data.ExecutionStateRepository
+import alexa.dev.ktcodeeditor.domain.ExecutionUIState
+import alexa.dev.ktcodeeditor.domain.ExecutionStateRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

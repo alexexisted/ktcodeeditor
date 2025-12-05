@@ -1,11 +1,11 @@
-import alexa.dev.ktcodeeditor.data.ExecutionStateRepository
-import alexa.dev.ktcodeeditor.data.ExecutionUIState
-import alexa.dev.ktcodeeditor.data.HighlightUIState
-import alexa.dev.ktcodeeditor.data.SyntaxHighlightStateRepository
+import alexa.dev.ktcodeeditor.domain.ExecutionStateRepository
+import alexa.dev.ktcodeeditor.domain.ExecutionUIState
+import alexa.dev.ktcodeeditor.domain.HighlightUIState
+import alexa.dev.ktcodeeditor.domain.SyntaxHighlightStateRepository
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIAction
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIState
-import alexa.dev.ktcodeeditor.service.CodeExecutionService
-import alexa.dev.ktcodeeditor.service.SyntaxHighlightService
+import alexa.dev.ktcodeeditor.domain.CodeExecutionService
+import alexa.dev.ktcodeeditor.domain.SyntaxHighlightService
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 

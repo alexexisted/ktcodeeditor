@@ -1,4 +1,4 @@
-package alexa.dev.ktcodeeditor.ui
+package alexa.dev.ktcodeeditor.ui.main_screen_components
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border

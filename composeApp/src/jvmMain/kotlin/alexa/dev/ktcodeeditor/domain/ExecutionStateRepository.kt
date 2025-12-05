@@ -1,4 +1,4 @@
-package alexa.dev.ktcodeeditor.data
+package alexa.dev.ktcodeeditor.domain
 
 import kotlinx.coroutines.flow.StateFlow
 
@@ -25,5 +25,6 @@ interface ExecutionStateRepository {
 data class ExecutionUIState(
     val outputText: String = "",
     val exitCode: String = "none",
-    val isRunning: Boolean = false
+    val isRunning: Boolean = false,
+    val kotlincPath: String = ""
 )

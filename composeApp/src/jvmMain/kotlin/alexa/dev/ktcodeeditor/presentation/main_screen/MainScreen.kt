@@ -1,5 +1,7 @@
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIAction
-import alexa.dev.ktcodeeditor.ui.*
+import alexa.dev.ktcodeeditor.ui.main_screen_components.MainEditorPaneComposable
+import alexa.dev.ktcodeeditor.ui.main_screen_components.PanelWithButtonsComposable
+import alexa.dev.ktcodeeditor.ui.main_screen_components.TerminalComposable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
@@ -47,8 +49,8 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
             isRunning = executionUIState.isRunning,
             showTerminal = uiState.showTerminal,
             lastExitCode = executionUIState.exitCode,
-            onRunCodeClicked = {viewModel.onAction(MainUIAction.OnRunScriptClicked)},
-            onCloseTerminalClicked = {viewModel.onAction(MainUIAction.OnCloseTerminalClicked)}
+            onRunCodeClicked = { viewModel.onAction(MainUIAction.OnRunScriptClicked) },
+            onCloseTerminalClicked = { viewModel.onAction(MainUIAction.OnCloseTerminalClicked) }
         )
 
         //terminal output part

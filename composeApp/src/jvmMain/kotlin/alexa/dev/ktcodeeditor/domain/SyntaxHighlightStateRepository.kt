@@ -1,7 +1,8 @@
-package alexa.dev.ktcodeeditor.data
+package alexa.dev.ktcodeeditor.domain
 
 import androidx.compose.ui.text.AnnotatedString
 import kotlinx.coroutines.flow.StateFlow
+
 /**
  *  Repository contains state of highlighted words and method to update them
  */
