@@ -45,7 +45,6 @@ class KotlincPathViewModel(
                     path = result.getOrDefault(""),
                     isPathValid = true,
                     showError = false,
-                    isDefaultPathValid = true
                 )
             }
         } else {
@@ -54,7 +53,6 @@ class KotlincPathViewModel(
                     path = "",
                     isPathValid = false,
                     showError = true,
-                    isDefaultPathValid = false
                 )
             }
         }
@@ -64,7 +62,7 @@ class KotlincPathViewModel(
     //checks path given by user
     private fun checkPathFromUser() {
         val result = kotlincPathFinderService.getPathFromUser(uiState.value.path)
-        if (result.isSuccess) {
+        if (result.isSuccess && result.getOrNull() != null) {
             _uiState.update {
                 it.copy(
                     path = result.getOrDefault(""),

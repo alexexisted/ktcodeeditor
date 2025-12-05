@@ -4,7 +4,6 @@ import alexa.dev.ktcodeeditor.ui.path_screen_components.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -20,13 +19,6 @@ fun KotlinCompilerPathScreen(
     onContinueToMain: () -> Unit = {},
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
-    //triggers the navigation when isDefaultPathValid becomes true
-    LaunchedEffect(uiState.isDefaultPathValid) {
-        if (uiState.isDefaultPathValid) {
-            onContinueToMain()
-        }
-    }
 
     Column(
         modifier = Modifier

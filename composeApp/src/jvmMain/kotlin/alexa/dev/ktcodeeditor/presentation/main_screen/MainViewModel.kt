@@ -1,11 +1,6 @@
-import alexa.dev.ktcodeeditor.domain.ExecutionStateRepository
-import alexa.dev.ktcodeeditor.domain.ExecutionUIState
-import alexa.dev.ktcodeeditor.domain.HighlightUIState
-import alexa.dev.ktcodeeditor.domain.SyntaxHighlightStateRepository
+import alexa.dev.ktcodeeditor.domain.*
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIAction
 import alexa.dev.ktcodeeditor.presentation.main_screen.MainUIState
-import alexa.dev.ktcodeeditor.domain.CodeExecutionService
-import alexa.dev.ktcodeeditor.domain.SyntaxHighlightService
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
@@ -32,6 +27,11 @@ class MainViewModel(
     private val _uiAction = MutableSharedFlow<MainUIAction>()
     val uiAction = _uiAction.asSharedFlow()
 
+    init {
+        //close settings when enter the main screen
+        closeSetting()
+    }
+
     //method to operate action calls from ui
     fun onAction(action: MainUIAction) {
         when (action) {
@@ -48,6 +48,10 @@ class MainViewModel(
                 updateText(action.newText)
                 highlightWords(action.newText)
             }
+
+            MainUIAction.OnSettingsClicked -> {
+                openSettings()
+            }
         }
     }
 
@@ -56,6 +60,22 @@ class MainViewModel(
         executionStateRepository.update {
             it.copy(
                 isRunning = true
+            )
+        }
+    }
+
+    fun closeSetting() {
+        executionStateRepository.update {
+            it.copy(
+                isRunning = false
+            )
+        }
+    }
+
+    private fun openSettings() {
+        _uiState.update {
+            it.copy(
+                openSettings = true
             )
         }
     }

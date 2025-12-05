@@ -24,6 +24,9 @@ fun AppNav(mainViewModel: MainViewModel, kotlincPathViewModel: KotlincPathViewMo
             onContinueToMain = { route = Route.Main }
         )
 
-        Route.Main -> MainScreen(mainViewModel)
+        Route.Main -> MainScreen(
+            onSettingsClicked = { route = Route.KotlincPath },
+            viewModel = mainViewModel,
+        )
     }
 }

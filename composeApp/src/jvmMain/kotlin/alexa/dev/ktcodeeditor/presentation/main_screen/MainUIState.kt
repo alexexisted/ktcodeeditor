@@ -6,5 +6,6 @@ package alexa.dev.ktcodeeditor.presentation.main_screen
 data class MainUIState(
     var enteredText: String = "",
     val showTerminal: Boolean = false,
+    val openSettings: Boolean = false
 )
 

@@ -24,6 +24,6 @@ fun SaveButtonPathFinderComposable(
             .fillMaxWidth()
             .height(56.dp)
     ) {
-        Text("Save Path")
+        Text("Save path or exit")
     }
 }
